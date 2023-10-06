@@ -13,6 +13,7 @@ class Expenses extends StatefulWidget {
   }
 }
 
+// Default list of expenses to populate screen
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
@@ -31,6 +32,7 @@ class _ExpensesState extends State<Expenses> {
     )
   ];
 
+  // Opens the modal to add expense
   void _addOpenExpenseOverlay() {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -39,12 +41,15 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 
+  // Add entered expense to the list of registered expenses
   void _addExpense(Expense expense) {
     setState(() {
       _registeredExpenses.add(expense);
     });
   }
 
+  /* Removes the expense from the list at a specified index
+     Display message on snackbar so that expense removal can be undone*/
   void _removeExpense(Expense expense) {
     final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
@@ -55,7 +60,7 @@ class _ExpensesState extends State<Expenses> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 5),
         content: const Text('Expense deleted'),
         action: SnackBarAction(
           label: 'Undo',
@@ -71,13 +76,12 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size.width);
-    // print(MediaQuery.of(context).size.height);
-
+    // Initialise content with default message if no expenses are added
     Widget mainContent = const Center(
       child: Text('No expenses found, start adding some!'),
     );
 
+    // If not empty, update the content to be rendered with the list of expenses
     if (_registeredExpenses.isNotEmpty) {
       mainContent = ExpensesList(
           expenses: _registeredExpenses, onRemoveExpense: _removeExpense);
@@ -85,7 +89,8 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Expense Tracker'),
+        title: Text('Flutter Expense Tracker',
+            style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           IconButton(
             onPressed: _addOpenExpenseOverlay,

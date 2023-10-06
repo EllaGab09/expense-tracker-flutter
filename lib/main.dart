@@ -9,7 +9,7 @@ var kColorScheme = ColorScheme.fromSeed(
 //Dark Theme Colos Scheme
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 35, 56, 61),
+  seedColor: Color.fromARGB(211, 44, 70, 77),
 );
 
 void main() {
