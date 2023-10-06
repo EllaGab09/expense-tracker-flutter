@@ -15,6 +15,7 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  final _noteController = TextEditingController();
   DateTime? _selectedDate;
   Category _selectedCategory = Category.leisure;
 
@@ -44,7 +45,7 @@ class _NewExpenseState extends State<NewExpense> {
         builder: (ctx) => AlertDialog(
           title: const Text('Invalid input'),
           content: const Text(
-              'Please make sure a valid title, amount, date and category was entered.'),
+              'Please make sure a valid title, amount, date and category was entered. Note is optional.'),
           actions: [
             TextButton(
                 onPressed: () {
@@ -63,6 +64,7 @@ class _NewExpenseState extends State<NewExpense> {
         amount: enteredAmount,
         date: _selectedDate!,
         category: _selectedCategory,
+        note: _noteController.text,
       ),
     );
 
@@ -89,6 +91,13 @@ class _NewExpenseState extends State<NewExpense> {
               label: Text('Title'),
             ),
           ),
+          TextField(
+            controller: _noteController,
+            maxLength: 25,
+            decoration: const InputDecoration(
+              label: Text('Note'),
+            ),
+          ),
           Row(
             children: [
               Expanded(
@@ -107,9 +116,11 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_selectedDate == null
-                        ? 'No date selected'
-                        : formatter.format(_selectedDate!)),
+                    Text(
+                      _selectedDate == null
+                          ? 'No date selected'
+                          : formatter.format(_selectedDate!),
+                    ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(

@@ -18,6 +18,8 @@ class ExpenseItem extends StatelessWidget {
         child: Column(
           children: [
             Text(expense.title, style: Theme.of(context).textTheme.titleLarge),
+            //Extra feat: Display expense note
+            Text(expense.note, style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 4),
             Row(
               children: [
